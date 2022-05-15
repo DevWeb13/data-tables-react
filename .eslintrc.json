@@ -4,8 +4,8 @@
         "es2021": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "plugin:prettier/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -18,6 +18,16 @@
         "react"
     ],
     "rules": {
+        "prettier/prettier": "error",
+        // Ici vous définissez vos règles de syntaxe
+        // Retrouvez les règles sur la documentation d'ESLint
+        "no-unused-vars": "warn",
+        "no-console": "off",
+        "func-names": "off",
+        "no-process-exit": "off",
+        "object-shorthand": "off",
+        "class-methods-use-this": "off",
+        // Seulement si c'est un projet React
         "react/jsx-filename-extension": [
             1,
             {
@@ -26,6 +36,7 @@
                     ".jsx"
                 ]
             }
-        ]
+        ],
+        "react/jsx-one-expression-per-line": "off"
     }
 }
