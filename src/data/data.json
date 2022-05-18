@@ -1,6 +1,6 @@
-{
-  "employees": [
+[
     {
+      "id": 1,
       "firstName": "John",
       "lastName": "Doe",
       "startDate": "2015-01-01",
@@ -12,6 +12,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 2,
       "firstName": "Jane",
       "lastName": "Doe",
       "startDate": "2015-01-01",
@@ -23,6 +24,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 3,
       "firstName": "Joe",
       "lastName": "Bloggs",
       "startDate": "2015-01-01",
@@ -34,6 +36,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 4,
       "firstName": "Jane",
       "lastName": "Bloggs",
       "startDate": "2015-01-01",
@@ -45,6 +48,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 5,
       "firstName": "Joe",
       "lastName": "Smith",
       "startDate": "2015-01-01",
@@ -56,6 +60,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 6,
       "firstName": "Jane",
       "lastName": "Smith",
       "startDate": "2015-01-01",
@@ -67,6 +72,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 7,
       "firstName": "Joe",
       "lastName": "Jones",
       "startDate": "2015-01-01",
@@ -78,6 +84,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 8,
       "firstName": "Jane",
       "lastName": "Jones",
       "startDate": "2015-01-01",
@@ -89,6 +96,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 9,
       "firstName": "Joe",
       "lastName": "Williams",
       "startDate": "2015-01-01",
@@ -100,6 +108,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 10,
       "firstName": "Jane",
       "lastName": "Williams",
       "startDate": "2015-01-01",
@@ -111,6 +120,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 11,
       "firstName": "Joe",
       "lastName": "Brown",
       "startDate": "2015-01-01",
@@ -122,6 +132,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 12,
       "firstName": "Jane",
       "lastName": "Brown",
       "startDate": "2015-01-01",
@@ -133,6 +144,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 13,
       "firstName": "Joe",
       "lastName": "Miller",
       "startDate": "2015-01-01",
@@ -144,6 +156,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 14,
       "firstName": "Jane",
       "lastName": "Miller",
       "startDate": "2015-01-01",
@@ -155,6 +168,7 @@
       "zipCode": "90210"
     },
     {
+      "id": 15,
       "firstName": "Joe",
       "lastName": "Davis",
       "startDate": "2015-01-01",
@@ -165,5 +179,5 @@
       "state": "CA",
       "zipCode": "90210"
     }
-  ]
-}
+  
+]

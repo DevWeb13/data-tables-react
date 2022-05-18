@@ -1,7 +1,9 @@
 import React from 'react';
 import './app.css';
+import PropTypes from 'prop-types';
 
-function App() {
+function App({ employees }) {
+  console.log(employees);
   return (
     <div id="employee-div" className="appContainer">
       <div id="employee-table_wrapper" className="dataTablesWrapper no-footer">
@@ -137,7 +139,92 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          <tr role="row" className="odd">
+          {employees.map((employee) => (
+            <tr role="row" key={employee.id}>
+              <td
+                className="sorting_1"
+                aria-controls="employee-table"
+                rowSpan={1}
+                colSpan={1}
+                aria-label="First Name: activate to sort column descending"
+              >
+                {employee.firstName}
+              </td>
+              <td
+                className="sorting_1"
+                aria-controls="employee-table"
+                rowSpan={1}
+                colSpan={1}
+                aria-label="Last Name: activate to sort column ascending"
+              >
+                {employee.lastName}
+              </td>
+              <td
+                className="sorting_1"
+                aria-controls="employee-table"
+                rowSpan={1}
+                colSpan={1}
+                aria-label="Start Date: activate to sort column ascending"
+              >
+                {employee.startDate}
+              </td>
+              <td
+                className="sorting_1"
+                aria-controls="employee-table"
+                rowSpan={1}
+                colSpan={1}
+                aria-label="Department: activate to sort column ascending"
+              >
+                {employee.department}
+              </td>
+              <td
+                className="sorting_1"
+                aria-controls="employee-table"
+                rowSpan={1}
+                colSpan={1}
+                aria-label="Date of Birth: activate to sort column ascending"
+              >
+                {employee.dateOfBirth}
+              </td>
+              <td
+                className="sorting_1"
+                aria-controls="employee-table"
+                rowSpan={1}
+                colSpan={1}
+                aria-label="Street: activate to sort column ascending"
+              >
+                {employee.street}
+              </td>
+              <td
+                className="sorting_1"
+                aria-controls="employee-table"
+                rowSpan={1}
+                colSpan={1}
+                aria-label="City: activate to sort column ascending"
+              >
+                {employee.city}
+              </td>
+              <td
+                className="sorting_1"
+                aria-controls="employee-table"
+                rowSpan={1}
+                colSpan={1}
+                aria-label="State: activate to sort column ascending"
+              >
+                {employee.state}
+              </td>
+              <td
+                className="sorting_1"
+                aria-controls="employee-table"
+                rowSpan={1}
+                colSpan={1}
+                aria-label="Zip Code: activate to sort column ascending"
+              >
+                {employee.zipCode}
+              </td>
+            </tr>
+          ))}
+          {/* <tr role="row" className="odd">
             <td className="sorting_1" />
             <td className="" />
             <td className="">05/14/2022</td>
@@ -158,7 +245,7 @@ function App() {
             <td />
             <td>AL</td>
             <td />
-          </tr>
+          </tr> */}
         </tbody>
       </table>
       <div className="dataTablesWrapper">
@@ -211,5 +298,24 @@ function App() {
     </div>
   );
 }
+
+App.defaultProps = null;
+
+App.propTypes = {
+  employees: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      startDate: PropTypes.string,
+      department: PropTypes.string,
+      dateOfBirth: PropTypes.string,
+      street: PropTypes.string,
+      city: PropTypes.string,
+      state: PropTypes.string,
+      zipCode: PropTypes.string,
+    }),
+  ),
+};
 
 export default App;
