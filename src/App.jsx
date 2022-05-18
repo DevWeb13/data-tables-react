@@ -5,7 +5,6 @@ import './app.css';
 function App() {
   return (
     <div id="employee-div" className="appContainer">
-      <h1>Current Employees</h1>
       <div id="employee-table_wrapper" className="dataTablesWrapper no-footer">
         <div className="dataTables_length" id="employee-table_length">
           <label htmlFor="selectButton">
