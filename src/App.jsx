@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './app.css';
 import PropTypes from 'prop-types';
 
 function App({ employees }) {
-  console.log(employees);
+  const [selectButtonValue, setSelectButtonValue] = useState(10);
+
+  /**
+   * The function takes an event as an argument, and then sets the state of the selectButtonValue to
+   * the value of the target of the event
+   * @param {{ target: any; }} e
+   */
+  function handleChange(e) {
+    const { target } = e;
+    setSelectButtonValue(parseInt(target.value, 10));
+  }
+
   return (
     <div id="employee-div" className="appContainer">
       <div id="employee-table_wrapper" className="dataTablesWrapper no-footer">
@@ -15,11 +26,13 @@ function App({ employees }) {
               aria-controls="employee-table"
               className="form-control form-control-sm"
               id="selectButton"
+              value={selectButtonValue}
+              onChange={handleChange}
             >
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
+              <option value={10}>{selectButtonValue}</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
             </select>{' '}
             entries
           </label>
