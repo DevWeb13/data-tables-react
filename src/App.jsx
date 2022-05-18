@@ -15,6 +15,12 @@ function App({ employees }) {
     setSelectButtonValue(parseInt(target.value, 10));
   }
 
+  function renderEmployees() {
+    const employeesToRender = employees.slice(0, selectButtonValue);
+    console.log(employeesToRender);
+    return employeesToRender;
+  }
+
   return (
     <div id="employee-div" className="appContainer">
       <div id="employee-table_wrapper" className="dataTablesWrapper no-footer">
@@ -152,7 +158,7 @@ function App({ employees }) {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee) => (
+          {renderEmployees().map((employee) => (
             <tr role="row" key={employee.id}>
               <td
                 className="sorting_1"
@@ -268,7 +274,8 @@ function App({ employees }) {
           role="status"
           aria-live="polite"
         >
-          Showing 1 to 1 of 1 entries
+          Showing {renderEmployees()[0].id} to {renderEmployees().length} of{' '}
+          {employees.length} entries
         </div>
         <div
           className="dataTables_paginate paging_simple_numbers"
