@@ -1,11 +1,12 @@
 import React from 'react';
 import './app.css';
+// import { Link } from 'react-router-dom';
 
 function App() {
   return (
     <div id="employee-div" className="appContainer">
       <h1>Current Employees</h1>
-      <div id="employee-table_wrapper" className="dataTables_wrapper no-footer">
+      <div id="employee-table_wrapper" className="dataTablesWrapper no-footer">
         <div className="dataTables_length" id="employee-table_length">
           <label htmlFor="selectButton">
             Show{' '}
@@ -162,6 +163,53 @@ function App() {
           </tr>
         </tbody>
       </table>
+      <div className="dataTablesWrapper">
+        <div
+          className="dataTables_info"
+          id="employee-table_info"
+          role="status"
+          aria-live="polite"
+        >
+          Showing 1 to 1 of 1 entries
+        </div>
+        <div
+          className="dataTables_paginate paging_simple_numbers"
+          id="employee-table_paginate"
+        >
+          <button
+            type="button"
+            className="paginate_button previous disabled"
+            aria-controls="employee-table"
+            data-dt-idx="0"
+            tabIndex={-1}
+            id="employee-table_previous"
+          >
+            Previous
+          </button>
+          <span>
+            <button
+              type="button"
+              className="paginate_button current"
+              aria-controls="employee-table"
+              data-dt-idx="1"
+              tabIndex={0}
+            >
+              1
+            </button>
+          </span>
+          <button
+            type="button"
+            className="paginate_button next disabled"
+            aria-controls="employee-table"
+            data-dt-idx="2"
+            tabIndex={-1}
+            id="employee-table_next"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+      <a href="index.html">Home</a>
     </div>
   );
 }
