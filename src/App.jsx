@@ -1,6 +1,5 @@
 import React from 'react';
 import './app.css';
-// import { Link } from 'react-router-dom';
 
 function App() {
   return (
