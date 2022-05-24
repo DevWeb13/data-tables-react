@@ -358,6 +358,42 @@
       "city": "Anytown",
       "state": "CA",
       "zipCode": "90210"
+    },
+    {
+      "id": 31,
+      "firstName": "Joe",
+      "lastName": "Miller",
+      "startDate": "2015-01-01",
+      "department": "Sales",
+      "dateOfBirth": "1980-01-01",
+      "street": "3 Main Street",
+      "city": "Anytown",
+      "state": "CA",
+      "zipCode": "1"
+    },
+    {
+      "id": 32,
+      "firstName": "Jane",
+      "lastName": "Miller",
+      "startDate": "2016-02-01",
+      "department": "Sales",
+      "dateOfBirth": "1982-08-12",
+      "street": "123 Main Street",
+      "city": "Anytown",
+      "state": "CA",
+      "zipCode": "90210"
+    },
+    {
+      "id": 33,
+      "firstName": "Joe",
+      "lastName": "Davis",
+      "startDate": "2016-01-01",
+      "department": "Sales",
+      "dateOfBirth": "1982-08-13",
+      "street": "23 Main Street",
+      "city": "Anytown",
+      "state": "CA",
+      "zipCode": "902100000"
     }
   
 ]

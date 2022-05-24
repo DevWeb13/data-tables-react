@@ -1,25 +1,71 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './app.css';
 import PropTypes from 'prop-types';
+import updateResult from './dataManager';
 
+/* COMMENTER LES PROPS */
 function App({ employees }) {
-  const [selectButtonValue, setSelectButtonValue] = useState(10);
+  const [selectValue, setSelectValue] = useState(10);
+  const [searchValue, setSearchValue] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+  const [indexOfPages, setIndexOfPages] = useState(1);
+  const [order, setOrder] = useState('asc');
+  const [column, setColumn] = useState('firstName');
+  const [employeesToRender, setEmployeesToRender] = useState([]);
 
-  /**
-   * The function takes an event as an argument, and then sets the state of the selectButtonValue to
-   * the value of the target of the event
-   * @param {{ target: any; }} e
-   */
-  function handleChange(e) {
-    const { target } = e;
-    setSelectButtonValue(parseInt(target.value, 10));
+  function handleSelect(e) {
+    setSelectValue(parseInt(e.target.value, 10));
+    setIndexOfPages(1);
   }
 
-  function renderEmployees() {
-    const employeesToRender = employees.slice(0, selectButtonValue);
-    console.log(employeesToRender);
-    return employeesToRender;
+  function handleSearch(e) {
+    setSearchValue(e.target.value);
+    setIndexOfPages(1);
   }
+
+  function previousPage() {
+    if (indexOfPages > 1) {
+      setIndexOfPages(indexOfPages - 1);
+    }
+  }
+
+  function nextPage() {
+    if (indexOfPages < filteredData.length / selectValue) {
+      setIndexOfPages(indexOfPages + 1);
+    }
+  }
+
+  function switchOrder(e) {
+    setColumn(e.target.className);
+    if (order === 'asc') {
+      setOrder('desc');
+    } else {
+      setOrder('asc');
+    }
+  }
+
+  useEffect(() => {
+    setEmployeesToRender(
+      updateResult(
+        employees,
+        selectValue,
+        searchValue,
+        indexOfPages,
+        order,
+        column,
+      )[0],
+    );
+    setFilteredData(
+      updateResult(
+        employees,
+        selectValue,
+        searchValue,
+        indexOfPages,
+        order,
+        column,
+      )[1],
+    );
+  }, [employees, selectValue, searchValue, indexOfPages, order, column]);
 
   return (
     <div id="employee-div" className="appContainer">
@@ -32,8 +78,8 @@ function App({ employees }) {
               aria-controls="employee-table"
               className="form-control form-control-sm"
               id="selectButton"
-              value={selectButtonValue}
-              onChange={handleChange}
+              value={selectValue}
+              onChange={handleSelect}
             >
               <option value={10}>10</option>
               <option value={25}>25</option>
@@ -50,8 +96,9 @@ function App({ employees }) {
               type="search"
               className="form-control form-control-sm"
               placeholder=""
-              aria-controls="employee-table"
               id="searchInput"
+              value={searchValue}
+              onChange={handleSearch}
             />
           </label>
         </div>
@@ -65,100 +112,109 @@ function App({ employees }) {
         <thead>
           <tr role="row">
             <th
-              className="sorting_asc"
+              className="firstName"
               tabIndex={0}
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
               aria-sort="ascending"
               aria-label="First Name: activate to sort column descending"
+              onClick={switchOrder}
             >
               First Name
             </th>
             <th
-              className="sorting"
+              className="lastName"
               tabIndex={0}
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
               aria-label="Last Name: activate to sort column ascending"
+              onClick={switchOrder}
             >
               Last Name
             </th>
             <th
-              className="sorting"
+              className="startDate"
               tabIndex={0}
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
               aria-label="Start Date: activate to sort column ascending"
+              onClick={switchOrder}
             >
               Start Date
             </th>
             <th
-              className="sorting"
+              className="department"
               tabIndex={0}
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
               aria-label="Department: activate to sort column ascending"
+              onClick={switchOrder}
             >
               Department
             </th>
             <th
-              className="sorting"
+              className="dateOfBirth"
               tabIndex={0}
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
               aria-label="Date of Birth: activate to sort column ascending"
+              onClick={switchOrder}
             >
               Date of Birth
             </th>
             <th
-              className="sorting"
+              className="street"
               tabIndex={0}
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
               aria-label="Street: activate to sort column ascending"
+              onClick={switchOrder}
             >
               Street
             </th>
             <th
-              className="sorting"
+              className="city"
               tabIndex={0}
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
               aria-label="City: activate to sort column ascending"
+              onClick={switchOrder}
             >
               City
             </th>
             <th
-              className="sorting"
+              className="state"
               tabIndex={0}
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
               aria-label="State: activate to sort column ascending"
+              onClick={switchOrder}
             >
               State
             </th>
             <th
-              className="sorting"
+              className="zipCode"
               tabIndex={0}
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
               aria-label="Zip Code: activate to sort column ascending"
+              onClick={switchOrder}
             >
               Zip Code
             </th>
           </tr>
         </thead>
         <tbody>
-          {renderEmployees().map((employee) => (
+          {employeesToRender.map((employee) => (
             <tr role="row" key={employee.id}>
               <td
                 className="sorting_1"
@@ -274,8 +330,15 @@ function App({ employees }) {
           role="status"
           aria-live="polite"
         >
-          Showing {renderEmployees()[0].id} to {renderEmployees().length} of{' '}
-          {employees.length} entries
+          Showing{' '}
+          {employeesToRender.indexOf(employeesToRender[0]) +
+            1 +
+            selectValue * (indexOfPages - 1)}{' '}
+          to{' '}
+          {filteredData.length < selectValue
+            ? employeesToRender.length
+            : employeesToRender.length + selectValue * (indexOfPages - 1)}{' '}
+          of {filteredData.length} entries
         </div>
         <div
           className="dataTables_paginate paging_simple_numbers"
@@ -283,32 +346,26 @@ function App({ employees }) {
         >
           <button
             type="button"
-            className="paginate_button previous disabled"
+            className="paginate_button previous"
             aria-controls="employee-table"
             data-dt-idx="0"
             tabIndex={-1}
             id="employee-table_previous"
+            onClick={() => previousPage()}
           >
             Previous
           </button>
-          <span>
-            <button
-              type="button"
-              className="paginate_button current"
-              aria-controls="employee-table"
-              data-dt-idx="1"
-              tabIndex={0}
-            >
-              1
-            </button>
-          </span>
+
+          <div className="paginate_button current">{indexOfPages}</div>
+
           <button
             type="button"
-            className="paginate_button next disabled"
+            className="paginate_button next"
             aria-controls="employee-table"
             data-dt-idx="2"
             tabIndex={-1}
             id="employee-table_next"
+            onClick={() => nextPage()}
           >
             Next
           </button>
