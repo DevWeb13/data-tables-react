@@ -45,25 +45,26 @@ function App({ employees }) {
   }
 
   function ariaSortManager(listName, direction) {
+    const changeDirection = direction === 'asc' ? 'ascending' : 'descending';
     switch (listName) {
       case 'firstName':
-        return direction === 'asc' ? 'ascending' : 'descending';
+        return changeDirection;
       case 'lastName':
-        return direction === 'asc' ? 'ascending' : 'descending';
+        return changeDirection;
       case 'startDate':
-        return direction === 'asc' ? 'ascending' : 'descending';
+        return changeDirection;
       case 'department':
-        return direction === 'asc' ? 'ascending' : 'descending';
+        return changeDirection;
       case 'dateOfBirth':
-        return direction === 'asc' ? 'ascending' : 'descending';
+        return changeDirection;
       case 'street':
-        return direction === 'asc' ? 'ascending' : 'descending';
+        return changeDirection;
       case 'city':
-        return direction === 'asc' ? 'ascending' : 'descending';
+        return changeDirection;
       case 'state':
-        return direction === 'asc' ? 'ascending' : 'descending';
+        return changeDirection;
       case 'zipCode':
-        return direction === 'asc' ? 'ascending' : 'descending';
+        return changeDirection;
       default:
         return null;
     }
