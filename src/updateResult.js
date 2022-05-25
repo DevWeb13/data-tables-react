@@ -129,15 +129,9 @@ function columnChooseAndSort(data, type, meaning) {
       }
       break;
     default:
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.firstName.localeCompare(b.firstName);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.firstName.localeCompare(a.firstName);
-        });
-      }
+      data.sort((a, b) => {
+        return a.firstName.localeCompare(b.firstName);
+      });
   }
   return data;
 }
