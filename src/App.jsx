@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './app.css';
 import PropTypes from 'prop-types';
-import updateResult from './dataManager';
+import updateResult from './updateResult';
 
 /* COMMENTER LES PROPS */
 function App({ employees }) {
