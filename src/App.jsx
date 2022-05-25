@@ -44,6 +44,31 @@ function App({ employees }) {
     }
   }
 
+  function ariaSortManager(listName, direction) {
+    switch (listName) {
+      case 'firstName':
+        return direction === 'asc' ? 'ascending' : 'descending';
+      case 'lastName':
+        return direction === 'asc' ? 'ascending' : 'descending';
+      case 'startDate':
+        return direction === 'asc' ? 'ascending' : 'descending';
+      case 'department':
+        return direction === 'asc' ? 'ascending' : 'descending';
+      case 'dateOfBirth':
+        return direction === 'asc' ? 'ascending' : 'descending';
+      case 'street':
+        return direction === 'asc' ? 'ascending' : 'descending';
+      case 'city':
+        return direction === 'asc' ? 'ascending' : 'descending';
+      case 'state':
+        return direction === 'asc' ? 'ascending' : 'descending';
+      case 'zipCode':
+        return direction === 'asc' ? 'ascending' : 'descending';
+      default:
+        return null;
+    }
+  }
+
   useEffect(() => {
     setEmployeesToRender(
       updateResult(
@@ -117,8 +142,12 @@ function App({ employees }) {
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
-              aria-sort="ascending"
-              aria-label="First Name: activate to sort column descending"
+              aria-sort={
+                column === 'firstName' ? ariaSortManager(column, order) : null
+              }
+              aria-label={`First Name: activate to sort column ${
+                order === 'asc' ? 'descending' : 'ascending'
+              }`}
               onClick={switchOrder}
             >
               First Name
@@ -129,7 +158,12 @@ function App({ employees }) {
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
-              aria-label="Last Name: activate to sort column ascending"
+              aria-sort={
+                column === 'lastName' ? ariaSortManager(column, order) : null
+              }
+              aria-label={`Last Name: activate to sort column ${
+                order === 'asc' ? 'descending' : 'ascending'
+              }`}
               onClick={switchOrder}
             >
               Last Name
@@ -140,7 +174,12 @@ function App({ employees }) {
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
-              aria-label="Start Date: activate to sort column ascending"
+              aria-sort={
+                column === 'startDate' ? ariaSortManager(column, order) : null
+              }
+              aria-label={`Start Date: activate to sort column ${
+                order === 'asc' ? 'descending' : 'ascending'
+              }`}
               onClick={switchOrder}
             >
               Start Date
@@ -151,7 +190,12 @@ function App({ employees }) {
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
-              aria-label="Department: activate to sort column ascending"
+              aria-sort={
+                column === 'department' ? ariaSortManager(column, order) : null
+              }
+              aria-label={`Department: activate to sort column ${
+                order === 'asc' ? 'descending' : 'ascending'
+              }`}
               onClick={switchOrder}
             >
               Department
@@ -162,7 +206,12 @@ function App({ employees }) {
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
-              aria-label="Date of Birth: activate to sort column ascending"
+              aria-sort={
+                column === 'dateOfBirth' ? ariaSortManager(column, order) : null
+              }
+              aria-label={`Date of Birth: activate to sort column ${
+                order === 'asc' ? 'descending' : 'ascending'
+              }`}
               onClick={switchOrder}
             >
               Date of Birth
@@ -173,7 +222,12 @@ function App({ employees }) {
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
-              aria-label="Street: activate to sort column ascending"
+              aria-sort={
+                column === 'street' ? ariaSortManager(column, order) : null
+              }
+              aria-label={`Street: activate to sort column ${
+                order === 'asc' ? 'descending' : 'ascending'
+              }`}
               onClick={switchOrder}
             >
               Street
@@ -184,7 +238,12 @@ function App({ employees }) {
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
-              aria-label="City: activate to sort column ascending"
+              aria-sort={
+                column === 'city' ? ariaSortManager(column, order) : null
+              }
+              aria-label={`City: activate to sort column ${
+                order === 'asc' ? 'descending' : 'ascending'
+              }`}
               onClick={switchOrder}
             >
               City
@@ -195,7 +254,12 @@ function App({ employees }) {
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
-              aria-label="State: activate to sort column ascending"
+              aria-sort={
+                column === 'state' ? ariaSortManager(column, order) : null
+              }
+              aria-label={`State: activate to sort column ${
+                order === 'asc' ? 'descending' : 'ascending'
+              }`}
               onClick={switchOrder}
             >
               State
@@ -206,7 +270,12 @@ function App({ employees }) {
               aria-controls="employee-table"
               rowSpan={1}
               colSpan={1}
-              aria-label="Zip Code: activate to sort column ascending"
+              aria-sort={
+                column === 'zipCode' ? ariaSortManager(column, order) : null
+              }
+              aria-label={`Zip Code: activate to sort column ${
+                order === 'asc' ? 'descending' : 'ascending'
+              }`}
               onClick={switchOrder}
             >
               Zip Code
@@ -221,6 +290,9 @@ function App({ employees }) {
                 aria-controls="employee-table"
                 rowSpan={1}
                 colSpan={1}
+                aria-sort={
+                  column === 'lastName' ? ariaSortManager(column, order) : null
+                }
                 aria-label="First Name: activate to sort column descending"
               >
                 {employee.firstName}
@@ -230,6 +302,9 @@ function App({ employees }) {
                 aria-controls="employee-table"
                 rowSpan={1}
                 colSpan={1}
+                aria-sort={
+                  column === 'lastName' ? ariaSortManager(column, order) : null
+                }
                 aria-label="Last Name: activate to sort column ascending"
               >
                 {employee.lastName}
@@ -239,6 +314,9 @@ function App({ employees }) {
                 aria-controls="employee-table"
                 rowSpan={1}
                 colSpan={1}
+                aria-sort={
+                  column === 'lastName' ? ariaSortManager(column, order) : null
+                }
                 aria-label="Start Date: activate to sort column ascending"
               >
                 {employee.startDate}
@@ -248,6 +326,9 @@ function App({ employees }) {
                 aria-controls="employee-table"
                 rowSpan={1}
                 colSpan={1}
+                aria-sort={
+                  column === 'lastName' ? ariaSortManager(column, order) : null
+                }
                 aria-label="Department: activate to sort column ascending"
               >
                 {employee.department}
@@ -257,6 +338,9 @@ function App({ employees }) {
                 aria-controls="employee-table"
                 rowSpan={1}
                 colSpan={1}
+                aria-sort={
+                  column === 'lastName' ? ariaSortManager(column, order) : null
+                }
                 aria-label="Date of Birth: activate to sort column ascending"
               >
                 {employee.dateOfBirth}
@@ -266,6 +350,9 @@ function App({ employees }) {
                 aria-controls="employee-table"
                 rowSpan={1}
                 colSpan={1}
+                aria-sort={
+                  column === 'lastName' ? ariaSortManager(column, order) : null
+                }
                 aria-label="Street: activate to sort column ascending"
               >
                 {employee.street}
@@ -275,6 +362,9 @@ function App({ employees }) {
                 aria-controls="employee-table"
                 rowSpan={1}
                 colSpan={1}
+                aria-sort={
+                  column === 'lastName' ? ariaSortManager(column, order) : null
+                }
                 aria-label="City: activate to sort column ascending"
               >
                 {employee.city}
@@ -284,6 +374,9 @@ function App({ employees }) {
                 aria-controls="employee-table"
                 rowSpan={1}
                 colSpan={1}
+                aria-sort={
+                  column === 'lastName' ? ariaSortManager(column, order) : null
+                }
                 aria-label="State: activate to sort column ascending"
               >
                 {employee.state}
@@ -293,6 +386,9 @@ function App({ employees }) {
                 aria-controls="employee-table"
                 rowSpan={1}
                 colSpan={1}
+                aria-sort={
+                  column === 'lastName' ? ariaSortManager(column, order) : null
+                }
                 aria-label="Zip Code: activate to sort column ascending"
               >
                 {employee.zipCode}
