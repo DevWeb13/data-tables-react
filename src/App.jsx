@@ -44,6 +44,13 @@ function App({ employees }) {
     }
   }
 
+  /**
+   * It takes in a list name and a direction, and returns a string that is either 'ascending' or
+   * 'descending' depending on the direction
+   * @param {string} listName   List name to column
+   * @param {string} direction  Direction to sort
+   * @return the value of the variable changeDirection.
+   */
   function ariaSortManager(listName, direction) {
     const changeDirection = direction === 'asc' ? 'ascending' : 'descending';
     switch (listName) {
@@ -68,6 +75,18 @@ function App({ employees }) {
       default:
         return null;
     }
+  }
+
+  /**
+   * If the direction is 'asc' then return the up arrow, otherwise return the down arrow
+   * @param {string} direction  Direction to sort
+   * @returns an icon based on the direction of the sort.
+   */
+  function showIconFaSort(direction) {
+    if (direction === 'asc') {
+      return <i className="fas fa-sort-up" aria-hidden="true" />;
+    }
+    return <i className="fas fa-sort-down" aria-hidden="true" />;
   }
 
   useEffect(() => {
@@ -102,7 +121,6 @@ function App({ employees }) {
             <select
               name="employee-table_length"
               aria-controls="employee-table"
-              className="form-control form-control-sm"
               id="selectButton"
               value={selectValue}
               onChange={handleSelect}
@@ -137,287 +155,56 @@ function App({ employees }) {
       >
         <thead>
           <tr role="row">
-            <th
-              className="firstName"
-              tabIndex={0}
-              aria-controls="employee-table"
-              rowSpan={1}
-              colSpan={1}
-              aria-sort={
-                column === 'firstName' ? ariaSortManager(column, order) : null
-              }
-              aria-label={`First Name: activate to sort column ${
-                order === 'asc' ? 'descending' : 'ascending'
-              }`}
-              onClick={switchOrder}
-            >
-              First Name
-            </th>
-            <th
-              className="lastName"
-              tabIndex={0}
-              aria-controls="employee-table"
-              rowSpan={1}
-              colSpan={1}
-              aria-sort={
-                column === 'lastName' ? ariaSortManager(column, order) : null
-              }
-              aria-label={`Last Name: activate to sort column ${
-                order === 'asc' ? 'descending' : 'ascending'
-              }`}
-              onClick={switchOrder}
-            >
-              Last Name
-            </th>
-            <th
-              className="startDate"
-              tabIndex={0}
-              aria-controls="employee-table"
-              rowSpan={1}
-              colSpan={1}
-              aria-sort={
-                column === 'startDate' ? ariaSortManager(column, order) : null
-              }
-              aria-label={`Start Date: activate to sort column ${
-                order === 'asc' ? 'descending' : 'ascending'
-              }`}
-              onClick={switchOrder}
-            >
-              Start Date
-            </th>
-            <th
-              className="department"
-              tabIndex={0}
-              aria-controls="employee-table"
-              rowSpan={1}
-              colSpan={1}
-              aria-sort={
-                column === 'department' ? ariaSortManager(column, order) : null
-              }
-              aria-label={`Department: activate to sort column ${
-                order === 'asc' ? 'descending' : 'ascending'
-              }`}
-              onClick={switchOrder}
-            >
-              Department
-            </th>
-            <th
-              className="dateOfBirth"
-              tabIndex={0}
-              aria-controls="employee-table"
-              rowSpan={1}
-              colSpan={1}
-              aria-sort={
-                column === 'dateOfBirth' ? ariaSortManager(column, order) : null
-              }
-              aria-label={`Date of Birth: activate to sort column ${
-                order === 'asc' ? 'descending' : 'ascending'
-              }`}
-              onClick={switchOrder}
-            >
-              Date of Birth
-            </th>
-            <th
-              className="street"
-              tabIndex={0}
-              aria-controls="employee-table"
-              rowSpan={1}
-              colSpan={1}
-              aria-sort={
-                column === 'street' ? ariaSortManager(column, order) : null
-              }
-              aria-label={`Street: activate to sort column ${
-                order === 'asc' ? 'descending' : 'ascending'
-              }`}
-              onClick={switchOrder}
-            >
-              Street
-            </th>
-            <th
-              className="city"
-              tabIndex={0}
-              aria-controls="employee-table"
-              rowSpan={1}
-              colSpan={1}
-              aria-sort={
-                column === 'city' ? ariaSortManager(column, order) : null
-              }
-              aria-label={`City: activate to sort column ${
-                order === 'asc' ? 'descending' : 'ascending'
-              }`}
-              onClick={switchOrder}
-            >
-              City
-            </th>
-            <th
-              className="state"
-              tabIndex={0}
-              aria-controls="employee-table"
-              rowSpan={1}
-              colSpan={1}
-              aria-sort={
-                column === 'state' ? ariaSortManager(column, order) : null
-              }
-              aria-label={`State: activate to sort column ${
-                order === 'asc' ? 'descending' : 'ascending'
-              }`}
-              onClick={switchOrder}
-            >
-              State
-            </th>
-            <th
-              className="zipCode"
-              tabIndex={0}
-              aria-controls="employee-table"
-              rowSpan={1}
-              colSpan={1}
-              aria-sort={
-                column === 'zipCode' ? ariaSortManager(column, order) : null
-              }
-              aria-label={`Zip Code: activate to sort column ${
-                order === 'asc' ? 'descending' : 'ascending'
-              }`}
-              onClick={switchOrder}
-            >
-              Zip Code
-            </th>
+            {Object.keys(employees[0]).map(
+              (key) =>
+                key !== 'id' && (
+                  <th
+                    key={key}
+                    className={key}
+                    tabIndex={0}
+                    aria-controls="employee-table"
+                    rowSpan={1}
+                    colSpan={1}
+                    onClick={switchOrder}
+                    aria-sort={
+                      column === key ? ariaSortManager(column, order) : null
+                    }
+                    aria-label={`${key}: activate to sort column ${
+                      order === 'asc' ? 'descending' : 'ascending'
+                    }`}
+                  >
+                    {key}
+                    {column === key ? showIconFaSort(order) : null}
+                  </th>
+                ),
+            )}
           </tr>
         </thead>
         <tbody>
           {employeesToRender.map((employee) => (
             <tr role="row" key={employee.id}>
-              <td
-                className="sorting_1"
-                aria-controls="employee-table"
-                rowSpan={1}
-                colSpan={1}
-                aria-sort={
-                  column === 'lastName' ? ariaSortManager(column, order) : null
-                }
-                aria-label="First Name: activate to sort column descending"
-              >
-                {employee.firstName}
-              </td>
-              <td
-                className="sorting_1"
-                aria-controls="employee-table"
-                rowSpan={1}
-                colSpan={1}
-                aria-sort={
-                  column === 'lastName' ? ariaSortManager(column, order) : null
-                }
-                aria-label="Last Name: activate to sort column ascending"
-              >
-                {employee.lastName}
-              </td>
-              <td
-                className="sorting_1"
-                aria-controls="employee-table"
-                rowSpan={1}
-                colSpan={1}
-                aria-sort={
-                  column === 'lastName' ? ariaSortManager(column, order) : null
-                }
-                aria-label="Start Date: activate to sort column ascending"
-              >
-                {employee.startDate}
-              </td>
-              <td
-                className="sorting_1"
-                aria-controls="employee-table"
-                rowSpan={1}
-                colSpan={1}
-                aria-sort={
-                  column === 'lastName' ? ariaSortManager(column, order) : null
-                }
-                aria-label="Department: activate to sort column ascending"
-              >
-                {employee.department}
-              </td>
-              <td
-                className="sorting_1"
-                aria-controls="employee-table"
-                rowSpan={1}
-                colSpan={1}
-                aria-sort={
-                  column === 'lastName' ? ariaSortManager(column, order) : null
-                }
-                aria-label="Date of Birth: activate to sort column ascending"
-              >
-                {employee.dateOfBirth}
-              </td>
-              <td
-                className="sorting_1"
-                aria-controls="employee-table"
-                rowSpan={1}
-                colSpan={1}
-                aria-sort={
-                  column === 'lastName' ? ariaSortManager(column, order) : null
-                }
-                aria-label="Street: activate to sort column ascending"
-              >
-                {employee.street}
-              </td>
-              <td
-                className="sorting_1"
-                aria-controls="employee-table"
-                rowSpan={1}
-                colSpan={1}
-                aria-sort={
-                  column === 'lastName' ? ariaSortManager(column, order) : null
-                }
-                aria-label="City: activate to sort column ascending"
-              >
-                {employee.city}
-              </td>
-              <td
-                className="sorting_1"
-                aria-controls="employee-table"
-                rowSpan={1}
-                colSpan={1}
-                aria-sort={
-                  column === 'lastName' ? ariaSortManager(column, order) : null
-                }
-                aria-label="State: activate to sort column ascending"
-              >
-                {employee.state}
-              </td>
-              <td
-                className="sorting_1"
-                aria-controls="employee-table"
-                rowSpan={1}
-                colSpan={1}
-                aria-sort={
-                  column === 'lastName' ? ariaSortManager(column, order) : null
-                }
-                aria-label="Zip Code: activate to sort column ascending"
-              >
-                {employee.zipCode}
-              </td>
+              {Object.keys(employees[0]).map(
+                (key) =>
+                  key !== 'id' && (
+                    <td
+                      key={key}
+                      className="sorting_1"
+                      aria-controls="employee-table"
+                      rowSpan={1}
+                      colSpan={1}
+                      aria-sort={
+                        column === key ? ariaSortManager(column, order) : null
+                      }
+                      aria-label={`${key}: activate to sort column ${
+                        order === 'asc' ? 'descending' : 'ascending'
+                      }`}
+                    >
+                      {employee[key]}
+                    </td>
+                  ),
+              )}
             </tr>
           ))}
-          {/* <tr role="row" className="odd">
-            <td className="sorting_1" />
-            <td className="" />
-            <td className="">05/14/2022</td>
-            <td>Sales</td>
-            <td className="" />
-            <td className="" />
-            <td />
-            <td>AL</td>
-            <td />
-          </tr>
-          <tr role="row" className="even">
-            <td className="sorting_1">lol</td>
-            <td className="" />
-            <td className="" />
-            <td>Sales</td>
-            <td className="" />
-            <td className="" />
-            <td />
-            <td>AL</td>
-            <td />
-          </tr> */}
         </tbody>
       </table>
       <div className="dataTablesWrapper">
