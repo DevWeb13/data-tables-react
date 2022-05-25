@@ -12,7 +12,7 @@ function search(array, value) {
     newfilteredData = array.filter((employee) => {
       return (
         employee.firstName.toLowerCase().includes(value.toLowerCase()) ||
-        employee.firstName.toLowerCase().includes(value.toLowerCase())
+        employee.lastName.toLowerCase().includes(value.toLowerCase())
       );
     });
   }
