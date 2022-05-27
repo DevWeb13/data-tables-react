@@ -16,7 +16,7 @@ function App({ employees }) {
     filteredData: [],
     indexOfPages: 1,
     order: 'asc',
-    column: 'firstName',
+    column: Object.keys(employees[0])[1],
     employeesToRender: [],
   });
 
@@ -63,36 +63,13 @@ function App({ employees }) {
   }
 
   /**
-   * It takes in a list name and a direction, and returns a string that is either 'ascending' or
-   * 'descending' depending on the direction
-   * @param {string} listName   List name to column
-   * @param {string} direction  Direction to sort
-   * @return the value of the variable changeDirection.
+   * It takes a string as an argument and returns a string
+   * @param {string} order  direction to sort
+   * @return the value of the variable changeOrder.
    */
-  function ariaSortManager(listName, direction) {
-    const changeDirection = direction === 'asc' ? 'ascending' : 'descending';
-    switch (listName) {
-      case 'firstName':
-        return changeDirection;
-      case 'lastName':
-        return changeDirection;
-      case 'startDate':
-        return changeDirection;
-      case 'department':
-        return changeDirection;
-      case 'dateOfBirth':
-        return changeDirection;
-      case 'street':
-        return changeDirection;
-      case 'city':
-        return changeDirection;
-      case 'state':
-        return changeDirection;
-      case 'zipCode':
-        return changeDirection;
-      default:
-        return null;
-    }
+  function ariaSortManager(order) {
+    const changeOrder = order === 'asc' ? 'ascending' : 'descending';
+    return changeOrder;
   }
 
   /**
@@ -191,9 +168,7 @@ function App({ employees }) {
                     colSpan={1}
                     onClick={switchOrder}
                     aria-sort={
-                      data.column === key
-                        ? ariaSortManager(data.column, data.order)
-                        : null
+                      data.column === key ? ariaSortManager(data.order) : null
                     }
                     aria-label={`${key}: activate to sort column ${
                       data.order === 'asc' ? 'descending' : 'ascending'
@@ -219,9 +194,7 @@ function App({ employees }) {
                       rowSpan={1}
                       colSpan={1}
                       aria-sort={
-                        data.column === key
-                          ? ariaSortManager(data.column, data.order)
-                          : null
+                        data.column === key ? ariaSortManager(data.order) : null
                       }
                       aria-label={`${key}: activate to sort column ${
                         data.order === 'asc' ? 'descending' : 'ascending'
