@@ -127,7 +127,14 @@ function App({ employees }) {
         data.column,
       )[0],
     });
-  }, [employees, data]);
+  }, [
+    employees,
+    data.selectValue,
+    data.searchValue,
+    data.indexOfPages,
+    data.order,
+    data.column,
+  ]);
 
   return (
     <div id="employee-div" className="appContainer">
