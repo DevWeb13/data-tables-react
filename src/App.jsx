@@ -3,45 +3,63 @@ import './app.css';
 import PropTypes from 'prop-types';
 import updateResult from './updateResult';
 
-/* COMMENTER LES PROPS */
+/**
+ *
+ * @param {Object} props
+ * @param {Object} props.employees
+ * @component
+ */
 function App({ employees }) {
-  const [selectValue, setSelectValue] = useState(10);
-  const [searchValue, setSearchValue] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
-  const [indexOfPages, setIndexOfPages] = useState(1);
-  const [order, setOrder] = useState('asc');
-  const [column, setColumn] = useState('firstName');
-  const [employeesToRender, setEmployeesToRender] = useState([]);
+  const [data, setData] = useState({
+    selectValue: 10,
+    searchValue: '',
+    filteredData: [],
+    indexOfPages: 1,
+    order: 'asc',
+    column: 'firstName',
+    employeesToRender: [],
+  });
 
   function handleSelect(e) {
-    setSelectValue(parseInt(e.target.value, 10));
-    setIndexOfPages(1);
+    setData({
+      ...data,
+      selectValue: parseInt(e.target.value, 10),
+      indexOfPages: 1,
+    });
   }
 
   function handleSearch(e) {
-    setSearchValue(e.target.value);
-    setIndexOfPages(1);
+    setData({
+      ...data,
+      searchValue: e.target.value,
+      indexOfPages: 1,
+    });
   }
 
   function previousPage() {
-    if (indexOfPages > 1) {
-      setIndexOfPages(indexOfPages - 1);
+    if (data.indexOfPages > 1) {
+      setData({
+        ...data,
+        indexOfPages: data.indexOfPages - 1,
+      });
     }
   }
 
   function nextPage() {
-    if (indexOfPages < filteredData.length / selectValue) {
-      setIndexOfPages(indexOfPages + 1);
+    if (data.indexOfPages < data.filteredData.length / data.selectValue) {
+      setData({
+        ...data,
+        indexOfPages: data.indexOfPages + 1,
+      });
     }
   }
 
   function switchOrder(e) {
-    setColumn(e.target.className);
-    if (order === 'asc') {
-      setOrder('desc');
-    } else {
-      setOrder('asc');
-    }
+    setData({
+      ...data,
+      column: e.target.className,
+      order: data.order === 'asc' ? 'desc' : 'asc',
+    });
   }
 
   /**
@@ -90,27 +108,26 @@ function App({ employees }) {
   }
 
   useEffect(() => {
-    setEmployeesToRender(
-      updateResult(
+    setData({
+      ...data,
+      filteredData: updateResult(
         employees,
-        selectValue,
-        searchValue,
-        indexOfPages,
-        order,
-        column,
-      )[0],
-    );
-    setFilteredData(
-      updateResult(
-        employees,
-        selectValue,
-        searchValue,
-        indexOfPages,
-        order,
-        column,
+        data.selectValue,
+        data.searchValue,
+        data.indexOfPages,
+        data.order,
+        data.column,
       )[1],
-    );
-  }, [employees, selectValue, searchValue, indexOfPages, order, column]);
+      employeesToRender: updateResult(
+        employees,
+        data.selectValue,
+        data.searchValue,
+        data.indexOfPages,
+        data.order,
+        data.column,
+      )[0],
+    });
+  }, [employees, data]);
 
   return (
     <div id="employee-div" className="appContainer">
@@ -122,7 +139,7 @@ function App({ employees }) {
               name="employee-table_length"
               aria-controls="employee-table"
               id="selectButton"
-              value={selectValue}
+              value={data.selectValue}
               onChange={handleSelect}
             >
               <option value={10}>10</option>
@@ -141,7 +158,7 @@ function App({ employees }) {
               className="form-control form-control-sm"
               placeholder=""
               id="searchInput"
-              value={searchValue}
+              value={data.searchValue}
               onChange={handleSearch}
             />
           </label>
@@ -167,21 +184,23 @@ function App({ employees }) {
                     colSpan={1}
                     onClick={switchOrder}
                     aria-sort={
-                      column === key ? ariaSortManager(column, order) : null
+                      data.column === key
+                        ? ariaSortManager(data.column, data.order)
+                        : null
                     }
                     aria-label={`${key}: activate to sort column ${
-                      order === 'asc' ? 'descending' : 'ascending'
+                      data.order === 'asc' ? 'descending' : 'ascending'
                     }`}
                   >
                     {key}
-                    {column === key ? showIconFaSort(order) : null}
+                    {data.column === key ? showIconFaSort(data.order) : null}
                   </th>
                 ),
             )}
           </tr>
         </thead>
         <tbody>
-          {employeesToRender.map((employee) => (
+          {data.employeesToRender.map((employee) => (
             <tr role="row" key={employee.id}>
               {Object.keys(employees[0]).map(
                 (key) =>
@@ -193,10 +212,12 @@ function App({ employees }) {
                       rowSpan={1}
                       colSpan={1}
                       aria-sort={
-                        column === key ? ariaSortManager(column, order) : null
+                        data.column === key
+                          ? ariaSortManager(data.column, data.order)
+                          : null
                       }
                       aria-label={`${key}: activate to sort column ${
-                        order === 'asc' ? 'descending' : 'ascending'
+                        data.order === 'asc' ? 'descending' : 'ascending'
                       }`}
                     >
                       {employee[key]}
@@ -215,14 +236,15 @@ function App({ employees }) {
           aria-live="polite"
         >
           Showing{' '}
-          {employeesToRender.indexOf(employeesToRender[0]) +
+          {data.employeesToRender.indexOf(data.employeesToRender[0]) +
             1 +
-            selectValue * (indexOfPages - 1)}{' '}
+            data.selectValue * (data.indexOfPages - 1)}{' '}
           to{' '}
-          {filteredData.length < selectValue
-            ? employeesToRender.length
-            : employeesToRender.length + selectValue * (indexOfPages - 1)}{' '}
-          of {filteredData.length} entries
+          {data.filteredData.length < data.selectValue
+            ? data.employeesToRender.length
+            : data.employeesToRender.length +
+              data.selectValue * (data.indexOfPages - 1)}{' '}
+          of {data.filteredData.length} entries
         </div>
         <div
           className="dataTables_paginate paging_simple_numbers"
@@ -240,7 +262,7 @@ function App({ employees }) {
             Previous
           </button>
 
-          <div className="paginate_button current">{indexOfPages}</div>
+          <div className="paginate_button current">{data.indexOfPages}</div>
 
           <button
             type="button"
