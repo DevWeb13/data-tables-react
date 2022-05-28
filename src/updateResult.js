@@ -28,112 +28,17 @@ function search(array, value) {
  * @return {array} - the sorted array
  */
 function columnChooseAndSort(data, type, meaning) {
-  switch (type) {
-    case 'firstName':
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.firstName.localeCompare(b.firstName);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.firstName.localeCompare(a.firstName);
-        });
-      }
-      break;
-    case 'lastName':
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.lastName.localeCompare(b.lastName);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.lastName.localeCompare(a.lastName);
-        });
-      }
-      break;
-    case 'startDate':
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.startDate.localeCompare(b.startDate);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.startDate.localeCompare(a.startDate);
-        });
-      }
-      break;
-    case 'department':
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.department.localeCompare(b.department);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.department.localeCompare(a.department);
-        });
-      }
-      break;
-    case 'dateOfBirth':
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.dateOfBirth.localeCompare(b.dateOfBirth);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.dateOfBirth.localeCompare(a.dateOfBirth);
-        });
-      }
-      break;
-    case 'street':
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.street.localeCompare(b.street);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.street.localeCompare(a.street);
-        });
-      }
-      break;
-    case 'city':
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.city.localeCompare(b.city);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.city.localeCompare(a.city);
-        });
-      }
-      break;
-    case 'state':
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.state.localeCompare(b.state);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.state.localeCompare(a.state);
-        });
-      }
-      break;
-    case 'zipCode':
-      if (meaning === 'asc') {
-        data.sort((a, b) => {
-          return a.zipCode.localeCompare(b.zipCode);
-        });
-      } else if (meaning === 'desc') {
-        data.sort((a, b) => {
-          return b.zipCode.localeCompare(a.zipCode);
-        });
-      }
-      break;
-    default:
-      data.sort((a, b) => {
-        return a.firstName.localeCompare(b.firstName);
-      });
+  let sortedData = [];
+  if (meaning === 'asc') {
+    sortedData = data.sort((a, b) => {
+      return a[type] > b[type] ? 1 : -1;
+    });
+  } else {
+    sortedData = data.sort((a, b) => {
+      return a[type] < b[type] ? 1 : -1;
+    });
   }
-  return data;
+  return sortedData;
 }
 
 /**
