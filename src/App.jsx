@@ -84,6 +84,27 @@ function App({ employees }) {
     return <i className="fas fa-sort-down" aria-hidden="true" />;
   }
 
+  function trClassManager(i) {
+    let trClass = '';
+    if (i % 2 === 0) {
+      trClass = 'dark';
+      return trClass;
+    }
+    trClass = 'light';
+    return trClass;
+  }
+
+  function tdClassManager(i, column, key) {
+    let tdClass = '';
+    if (column === key && i % 2 === 0) {
+      tdClass = 'darkBold';
+    }
+    if (column === key && !(i % 2 === 0)) {
+      tdClass = 'lightBold';
+    }
+    return tdClass;
+  }
+
   useEffect(() => {
     setData({
       ...data,
@@ -139,8 +160,6 @@ function App({ employees }) {
             Search:{' '}
             <input
               type="search"
-              className="form-control form-control-sm"
-              placeholder=""
               id="searchInput"
               value={data.searchValue}
               onChange={handleSearch}
@@ -182,13 +201,14 @@ function App({ employees }) {
           </tr>
         </thead>
         <tbody>
-          {data.employeesToRender.map((employee) => (
-            <tr role="row" key={employee.id}>
+          {data.employeesToRender.map((employee, index) => (
+            <tr role="row" key={employee.id} className={trClassManager(index)}>
               {Object.keys(employees[0]).map(
                 (key) =>
                   key !== 'id' && (
                     <td
                       key={key}
+                      className={tdClassManager(index, data.column, key)}
                       aria-controls="employee-table"
                       rowSpan={1}
                       colSpan={1}
@@ -227,16 +247,12 @@ function App({ employees }) {
               data.selectValue * (data.indexOfPages - 1)}{' '}
           of {data.filteredData.length} entries
         </div>
-        <div
-          className="dataTables_paginate paging_simple_numbers"
-          id="employee-table_paginate"
-        >
+        <div className="dataTables_paginate" id="employee-table_paginate">
           {data.indexOfPages > 1 && (
             <button
               type="button"
               className="paginate_button previous"
               aria-controls="employee-table"
-              data-dt-idx="0"
               tabIndex={-1}
               id="employee-table_previous"
               onClick={() => previousPage()}
@@ -251,7 +267,6 @@ function App({ employees }) {
               type="button"
               className="paginate_button next"
               aria-controls="employee-table"
-              data-dt-idx="2"
               tabIndex={-1}
               id="employee-table_next"
               onClick={() => nextPage()}
@@ -261,7 +276,6 @@ function App({ employees }) {
           )}
         </div>
       </div>
-      <a href="index.html">Home</a>
     </div>
   );
 }
