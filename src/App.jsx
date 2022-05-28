@@ -68,8 +68,7 @@ function App({ employees }) {
    * @return the value of the variable changeOrder.
    */
   function ariaManager(order) {
-    const changeOrder = order === 'asc' ? 'ascending' : 'descending';
-    return changeOrder;
+    return order === 'asc' ? 'ascending' : 'descending';
   }
 
   /**
@@ -99,7 +98,7 @@ function App({ employees }) {
     if (column === key && i % 2 === 0) {
       tdClass = 'darkBold';
     }
-    if (column === key && !(i % 2 === 0)) {
+    if (column === key && i % 2 !== 0) {
       tdClass = 'lightBold';
     }
     return tdClass;
