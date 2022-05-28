@@ -67,7 +67,7 @@ function App({ employees }) {
    * @param {string} order  direction to sort
    * @return the value of the variable changeOrder.
    */
-  function ariaSortManager(order) {
+  function ariaManager(order) {
     const changeOrder = order === 'asc' ? 'ascending' : 'descending';
     return changeOrder;
   }
@@ -168,7 +168,7 @@ function App({ employees }) {
                     colSpan={1}
                     onClick={switchOrder}
                     aria-sort={
-                      data.column === key ? ariaSortManager(data.order) : null
+                      data.column === key ? ariaManager(data.order) : null
                     }
                     aria-label={`${key}: activate to sort column ${
                       data.order === 'asc' ? 'descending' : 'ascending'
@@ -189,16 +189,17 @@ function App({ employees }) {
                   key !== 'id' && (
                     <td
                       key={key}
-                      className="sorting_1"
                       aria-controls="employee-table"
                       rowSpan={1}
                       colSpan={1}
                       aria-sort={
-                        data.column === key ? ariaSortManager(data.order) : null
+                        data.column === key ? ariaManager(data.order) : null
                       }
-                      aria-label={`${key}: activate to sort column ${
-                        data.order === 'asc' ? 'descending' : 'ascending'
-                      }`}
+                      aria-label={
+                        data.column === key
+                          ? `${key}: ${ariaManager(data.order)}`
+                          : key
+                      }
                     >
                       {employee[key]}
                     </td>
@@ -230,31 +231,34 @@ function App({ employees }) {
           className="dataTables_paginate paging_simple_numbers"
           id="employee-table_paginate"
         >
-          <button
-            type="button"
-            className="paginate_button previous"
-            aria-controls="employee-table"
-            data-dt-idx="0"
-            tabIndex={-1}
-            id="employee-table_previous"
-            onClick={() => previousPage()}
-          >
-            Previous
-          </button>
+          {data.indexOfPages > 1 && (
+            <button
+              type="button"
+              className="paginate_button previous"
+              aria-controls="employee-table"
+              data-dt-idx="0"
+              tabIndex={-1}
+              id="employee-table_previous"
+              onClick={() => previousPage()}
+            >
+              Previous
+            </button>
+          )}
 
           <div className="paginate_button current">{data.indexOfPages}</div>
-
-          <button
-            type="button"
-            className="paginate_button next"
-            aria-controls="employee-table"
-            data-dt-idx="2"
-            tabIndex={-1}
-            id="employee-table_next"
-            onClick={() => nextPage()}
-          >
-            Next
-          </button>
+          {data.indexOfPages < data.filteredData.length / data.selectValue && (
+            <button
+              type="button"
+              className="paginate_button next"
+              aria-controls="employee-table"
+              data-dt-idx="2"
+              tabIndex={-1}
+              id="employee-table_next"
+              onClick={() => nextPage()}
+            >
+              Next
+            </button>
+          )}
         </div>
       </div>
       <a href="index.html">Home</a>
