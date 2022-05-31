@@ -2,7 +2,7 @@
   "name": "data-tables-react",
   "version": "0.1.0",
   "private": false,
-  "main": "src/index.jsx",
+  "main": "src/index.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
