@@ -5,8 +5,10 @@ import App from './App';
 import employees from './data/data.json';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-export default root.render(
+root.render(
   <React.StrictMode>
     <App employees={employees} />
   </React.StrictMode>,
 );
+
+export default App;
