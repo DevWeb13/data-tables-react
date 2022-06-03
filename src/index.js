@@ -10,3 +10,5 @@ root.render(
     <App employees={employees} />
   </React.StrictMode>,
 );
+
+export default root;
