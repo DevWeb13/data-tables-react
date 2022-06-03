@@ -50,4 +50,8 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "prettier": "^2.6.2"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 72772c40efd76a22caded47981bc0c73ced563b0
