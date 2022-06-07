@@ -296,15 +296,6 @@ App.defaultProps = {
   employees: [
     {
       id: 1,
-      firstName: 'firstName',
-      lastName: 'lastName',
-      startDate: 'startDate',
-      department: 'department',
-      dateofBirth: 'dateOfBirth',
-      street: 'street',
-      city: 'city',
-      state: 'state',
-      zipCode: 'zipCode',
     },
   ],
 };
@@ -313,15 +304,6 @@ App.propTypes = {
   employees: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      firstName: PropTypes.string,
-      lastName: PropTypes.string,
-      startDate: PropTypes.string,
-      department: PropTypes.string,
-      dateOfBirth: PropTypes.string,
-      street: PropTypes.string,
-      city: PropTypes.string,
-      state: PropTypes.string,
-      zipCode: PropTypes.string,
     }),
   ),
 };

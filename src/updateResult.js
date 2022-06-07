@@ -31,13 +31,21 @@ function search(array, value, column) {
  */
 function columnChooseAndSort(data, type, meaning) {
   let sortedData = [];
+
   if (meaning === 'asc') {
     sortedData = data.sort((a, b) => {
-      return a[type] > b[type] ? 1 : -1;
+      if (typeof a[type] === 'string') {
+        return a[type].localeCompare(b[type]);
+      }
+      console.log(a[type], b[type]);
+      return a[type] - b[type];
     });
   } else {
     sortedData = data.sort((a, b) => {
-      return a[type] < b[type] ? 1 : -1;
+      if (typeof a[type] === 'string') {
+        return b[type].localeCompare(a[type]);
+      }
+      return b[type] - a[type];
     });
   }
   return sortedData;
