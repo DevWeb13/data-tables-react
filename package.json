@@ -1,9 +1,8 @@
 {
   "name": "data-tables-react",
   "version": "0.1.0",
-  "private": false,
-  "main": "build/static/js/main.b04cb56d.js",
-  "type": "module",
+  "private": true,
+  "main": "src/index.js",
   "dependencies": {
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-react": "^7.17.12",

@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import employees from './data/data.json';
+
+const employees = [];
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -10,5 +11,3 @@ root.render(
     <App employees={employees} />
   </React.StrictMode>,
 );
-
-export default App;

@@ -10,13 +10,15 @@ import updateResult from './updateResult';
  * @component
  */
 function App({ employees }) {
+  console.log(employees);
   const [data, setData] = useState({
     selectValue: 10,
     searchValue: '',
     filteredData: [],
     indexOfPages: 1,
     order: 'asc',
-    column: Object.keys(employees[0])[1],
+    column:
+      employees && employees.length !== 0 ? Object.keys(employees[0])[1] : '',
     employeesToRender: [],
   });
 
@@ -93,6 +95,14 @@ function App({ employees }) {
     return trClass;
   }
 
+  /**
+   * If the column is the same as the key and the row is even, then the tdClass is darkBold. If the
+   * column is the same as the key and the row is odd, then the tdClass is lightBold
+   * @param {string} key  Key of the object
+   * @param {string} column  Column to sort
+   * @param {number} i  Index of the row
+   * @returns a string that will be used as a class name for a table cell.
+   */
   function tdClassManager(i, column, key) {
     let tdClass = '';
     if (column === key && i % 2 === 0) {
@@ -133,7 +143,7 @@ function App({ employees }) {
     data.column,
   ]);
 
-  return (
+  return employees && employees.length !== 0 ? (
     <div id="employee-div" className="appContainer">
       <div id="employee-table_wrapper" className="dataTablesWrapper no-footer">
         <div className="dataTables_length" id="employee-table_length">
@@ -276,10 +286,28 @@ function App({ employees }) {
         </div>
       </div>
     </div>
+  ) : (
+    <div className="appContainer">
+      <h2 className="noData">No data available in table</h2>
+    </div>
   );
 }
 
-App.defaultProps = null;
+App.defaultProps = {
+  employees: [
+    {
+      firstName: 'firstName',
+      lastName: 'lastName',
+      startDate: 'startDate',
+      department: 'department',
+      dateofBirth: 'dateOfBirth',
+      street: 'street',
+      city: 'city',
+      state: 'state',
+      zipCode: 'zipCode',
+    },
+  ],
+};
 
 App.propTypes = {
   employees: PropTypes.arrayOf(

@@ -39,11 +39,6 @@ table.dataTable.display tbody td {
   border-top: 1px solid #ddd;
 }
 
-/* table.dataTable.hover tbody tr:hover,
-table.dataTable.display tbody tr:hover {
-  background-color: #f6f6f6;
-} */
-
 table.dataTable.no-footer {
   border-bottom: 1px solid #111;
 }
@@ -125,4 +120,11 @@ table.dataTable.no-footer {
 
 .light:hover > .lightBold {
   background-color: #eaeaea;
+}
+
+.noData {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
 }

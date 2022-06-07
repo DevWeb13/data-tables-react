@@ -83,6 +83,9 @@ function updateResult(
 ) {
   let employeesToRender = [];
   let filteredData = [];
+  if (!employees || employees.length === 0) {
+    return [employeesToRender, filteredData];
+  }
 
   filteredData = search(employees, searchValue);
 
