@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: App.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: App.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react';
+import './app.css';
+import PropTypes from 'prop-types';
+import updateResult from './updateResult';
+
+/**
+ *
+ * @param {Object} props
+ * @param {Array} props.employees
+ * @component
+ */
+function App({ employees }) {
+  const [data, setData] = useState({
+    selectValue: 10,
+    searchValue: '',
+    filteredData: [],
+    indexOfPages: 1,
+    order: 'asc',
+    column:
+      employees &amp;&amp; employees.length !== 0 ? Object.keys(employees[0])[1] : '',
+    employeesToRender: [],
+  });
+
+  function handleSelect(e) {
+    setData({
+      ...data,
+      selectValue: parseInt(e.target.value, 10),
+      indexOfPages: 1,
+    });
+  }
+
+  function handleSearch(e) {
+    setData({
+      ...data,
+      searchValue: e.target.value,
+      indexOfPages: 1,
+    });
+  }
+
+  function previousPage() {
+    if (data.indexOfPages > 1) {
+      setData({
+        ...data,
+        indexOfPages: data.indexOfPages - 1,
+      });
+    }
+  }
+
+  function nextPage() {
+    if (data.indexOfPages &lt; data.filteredData.length / data.selectValue) {
+      setData({
+        ...data,
+        indexOfPages: data.indexOfPages + 1,
+      });
+    }
+  }
+
+  function switchOrder(e) {
+    setData({
+      ...data,
+      column: e.target.className,
+      order: data.order === 'asc' ? 'desc' : 'asc',
+    });
+  }
+
+  /**
+   * It takes a string as an argument and returns a string
+   * @param {string} order  direction to sort
+   * @return the value of the variable changeOrder.
+   */
+  function ariaManager(order) {
+    return order === 'asc' ? 'ascending' : 'descending';
+  }
+
+  /**
+   * If the direction is 'asc' then return the up arrow, otherwise return the down arrow
+   * @param {string} direction  Direction to sort
+   * @returns an icon based on the direction of the sort.
+   */
+  function showIconFaSort(direction) {
+    if (direction === 'asc') {
+      return &lt;i className="fas fa-sort-up" aria-hidden="true" />;
+    }
+    return &lt;i className="fas fa-sort-down" aria-hidden="true" />;
+  }
+
+  function trClassManager(i) {
+    let trClass = '';
+    if (i % 2 === 0) {
+      trClass = 'dark';
+      return trClass;
+    }
+    trClass = 'light';
+    return trClass;
+  }
+
+  /**
+   * If the column is the same as the key and the row is even, then the tdClass is darkBold. If the
+   * column is the same as the key and the row is odd, then the tdClass is lightBold
+   * @param {string} key  Key of the object
+   * @param {string} column  Column to sort
+   * @param {number} i  Index of the row
+   * @returns a string that will be used as a class name for a table cell.
+   */
+  function tdClassManager(i, column, key) {
+    let tdClass = '';
+    if (column === key &amp;&amp; i % 2 === 0) {
+      tdClass = 'darkBold';
+    }
+    if (column === key &amp;&amp; i % 2 !== 0) {
+      tdClass = 'lightBold';
+    }
+    return tdClass;
+  }
+
+  useEffect(() => {
+    setData({
+      ...data,
+      filteredData: updateResult(
+        employees,
+        data.selectValue,
+        data.searchValue,
+        data.indexOfPages,
+        data.order,
+        data.column,
+      )[1],
+      employeesToRender: updateResult(
+        employees,
+        data.selectValue,
+        data.searchValue,
+        data.indexOfPages,
+        data.order,
+        data.column,
+      )[0],
+    });
+  }, [
+    employees,
+    data.selectValue,
+    data.searchValue,
+    data.indexOfPages,
+    data.order,
+    data.column,
+  ]);
+
+  return employees &amp;&amp; employees.length !== 0 ? (
+    &lt;div id="employee-div" className="appContainer">
+      &lt;div id="employee-table_wrapper" className="dataTablesWrapper no-footer">
+        &lt;div className="dataTables_length" id="employee-table_length">
+          &lt;label htmlFor="selectButton">
+            Show{' '}
+            &lt;select
+              name="employee-table_length"
+              aria-controls="employee-table"
+              id="selectButton"
+              value={data.selectValue}
+              onChange={handleSelect}
+            >
+              &lt;option value={10}>10&lt;/option>
+              &lt;option value={25}>25&lt;/option>
+              &lt;option value={50}>50&lt;/option>
+              &lt;option value={100}>100&lt;/option>
+            &lt;/select>{' '}
+            entries
+          &lt;/label>
+        &lt;/div>
+        &lt;div id="employee-table_filter" className="dataTables_filter">
+          &lt;label htmlFor="searchInput">
+            Search:{' '}
+            &lt;input
+              type="search"
+              id="searchInput"
+              value={data.searchValue}
+              onChange={handleSearch}
+            />
+          &lt;/label>
+        &lt;/div>
+      &lt;/div>
+      &lt;table
+        id="employee-table"
+        className="display dataTable no-footer"
+        role="grid"
+        aria-describedby="employee-table_info"
+      >
+        &lt;thead>
+          &lt;tr role="row">
+            {Object.keys(employees[0]).map(
+              (key) =>
+                key !== 'id' &amp;&amp; (
+                  &lt;th
+                    key={key}
+                    className={key}
+                    tabIndex={0}
+                    aria-controls="employee-table"
+                    rowSpan={1}
+                    colSpan={1}
+                    onClick={switchOrder}
+                    aria-sort={
+                      data.column === key ? ariaManager(data.order) : null
+                    }
+                    aria-label={`${key}: activate to sort column ${
+                      data.order === 'asc' ? 'descending' : 'ascending'
+                    }`}
+                  >
+                    {key}
+                    {data.column === key ? showIconFaSort(data.order) : null}
+                  &lt;/th>
+                ),
+            )}
+          &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+          {data.employeesToRender.map((employee, index) => (
+            &lt;tr role="row" key={employee.id} className={trClassManager(index)}>
+              {Object.keys(employees[0]).map(
+                (key) =>
+                  key !== 'id' &amp;&amp; (
+                    &lt;td
+                      key={key}
+                      className={tdClassManager(index, data.column, key)}
+                      aria-controls="employee-table"
+                      rowSpan={1}
+                      colSpan={1}
+                      aria-sort={
+                        data.column === key ? ariaManager(data.order) : null
+                      }
+                      aria-label={
+                        data.column === key
+                          ? `${key}: ${ariaManager(data.order)}`
+                          : key
+                      }
+                    >
+                      {employee[key]}
+                    &lt;/td>
+                  ),
+              )}
+            &lt;/tr>
+          ))}
+        &lt;/tbody>
+      &lt;/table>
+      &lt;div className="dataTablesWrapper">
+        &lt;div
+          className="dataTables_info"
+          id="employee-table_info"
+          role="status"
+          aria-live="polite"
+        >
+          Showing{' '}
+          {data.employeesToRender.indexOf(data.employeesToRender[0]) +
+            1 +
+            data.selectValue * (data.indexOfPages - 1)}{' '}
+          to{' '}
+          {data.filteredData.length &lt; data.selectValue
+            ? data.employeesToRender.length
+            : data.employeesToRender.length +
+              data.selectValue * (data.indexOfPages - 1)}{' '}
+          of {data.filteredData.length} entries
+        &lt;/div>
+        &lt;div className="dataTables_paginate" id="employee-table_paginate">
+          {data.indexOfPages > 1 &amp;&amp; (
+            &lt;button
+              type="button"
+              className="paginate_button previous"
+              aria-controls="employee-table"
+              tabIndex={-1}
+              id="employee-table_previous"
+              onClick={() => previousPage()}
+            >
+              Previous
+            &lt;/button>
+          )}
+
+          &lt;div className="paginate_button current">{data.indexOfPages}&lt;/div>
+          {data.indexOfPages &lt; data.filteredData.length / data.selectValue &amp;&amp; (
+            &lt;button
+              type="button"
+              className="paginate_button next"
+              aria-controls="employee-table"
+              tabIndex={-1}
+              id="employee-table_next"
+              onClick={() => nextPage()}
+            >
+              Next
+            &lt;/button>
+          )}
+        &lt;/div>
+      &lt;/div>
+    &lt;/div>
+  ) : (
+    &lt;div className="appContainer">
+      &lt;h2 className="noData">No data available in table&lt;/h2>
+    &lt;/div>
+  );
+}
+
+App.defaultProps = {
+  employees: [
+    {
+      id: 1,
+    },
+  ],
+};
+
+App.propTypes = {
+  employees: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }),
+  ),
+};
+
+export default App;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#columnChooseAndSort">columnChooseAndSort</a></li><li><a href="global.html#paginateData">paginateData</a></li><li><a href="global.html#search">search</a></li><li><a href="global.html#updateResult">updateResult</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Tue Jun 07 2022 17:02:59 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
