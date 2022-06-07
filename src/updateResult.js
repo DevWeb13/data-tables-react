@@ -1,19 +1,21 @@
 /**
- * The function takes in an array and a value, and returns a new array with the filtered data
+ * It takes in an array, a value, and a column, and returns a new array that is filtered based on the
+ * value and column
  * @param {array} array - the array of data to be filtered
  * @param {string} value - the value of the search input
+ * @param {string} column - the column name of the data you want to search
  * @return {array} a new array of employees that match the search criteria.
  */
-function search(array, value) {
+function search(array, value, column) {
   let newfilteredData = [];
   if (value.length === 0) {
     newfilteredData = array;
   } else {
     newfilteredData = array.filter((employee) => {
-      return (
-        employee.firstName.toLowerCase().includes(value.toLowerCase()) ||
-        employee.lastName.toLowerCase().includes(value.toLowerCase())
-      );
+      return employee[column]
+        .toString()
+        .toLowerCase()
+        .includes(value.toLowerCase());
     });
   }
   return newfilteredData;
@@ -87,7 +89,7 @@ function updateResult(
     return [employeesToRender, filteredData];
   }
 
-  filteredData = search(employees, searchValue);
+  filteredData = search(employees, searchValue, column);
 
   filteredData = columnChooseAndSort(filteredData, column, order);
 
