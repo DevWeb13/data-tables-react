@@ -6,11 +6,10 @@ import updateResult from './updateResult';
 /**
  *
  * @param {Object} props
- * @param {Object} props.employees
+ * @param {Array} props.employees
  * @component
  */
 function App({ employees }) {
-  console.log(employees);
   const [data, setData] = useState({
     selectValue: 10,
     searchValue: '',
@@ -296,6 +295,7 @@ function App({ employees }) {
 App.defaultProps = {
   employees: [
     {
+      id: 1,
       firstName: 'firstName',
       lastName: 'lastName',
       startDate: 'startDate',
@@ -312,7 +312,7 @@ App.defaultProps = {
 App.propTypes = {
   employees: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.number.isRequired,
       firstName: PropTypes.string,
       lastName: PropTypes.string,
       startDate: PropTypes.string,
