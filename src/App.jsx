@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './app.css';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import updateResult from './updateResult';
 
 /**
@@ -79,9 +81,9 @@ function App({ employees }) {
    */
   function showIconFaSort(direction) {
     if (direction === 'asc') {
-      return <i className="fas fa-sort-up" aria-hidden="true" />;
+      return <FontAwesomeIcon icon={faSortDown} />;
     }
-    return <i className="fas fa-sort-down" aria-hidden="true" />;
+    return <FontAwesomeIcon icon={faSortUp} />;
   }
 
   function trClassManager(i) {
