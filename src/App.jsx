@@ -195,7 +195,7 @@ function App({ employees }) {
                     colSpan={1}
                     onClick={switchOrder}
                     aria-sort={
-                      data.column === key ? ariaManager(data.order) : null
+                      data.column === key ? ariaManager(data.order) : 'none'
                     }
                     aria-label={`${key}: activate to sort column ${
                       data.order === 'asc' ? 'descending' : 'ascending'
@@ -221,7 +221,7 @@ function App({ employees }) {
                       rowSpan={1}
                       colSpan={1}
                       aria-sort={
-                        data.column === key ? ariaManager(data.order) : null
+                        data.column === key ? ariaManager(data.order) : 'none'
                       }
                       aria-label={
                         data.column === key
